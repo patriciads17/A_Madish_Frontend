@@ -8,26 +8,93 @@ function importComponent(path) {
 }
 
 const router = new VueRouter({
-    mode: "history",
+    mode: 'history',
     routes: [
+
         {
-            path: "/",
-            name: "admin",
-            component: importComponent("DashboardLayout"),
+            path: '/',
+            name: 'Index',
+            meta: { title: 'Madish Web'},
+            component: importComponent('Index'),
+        },
+
+        //route halaman admin
+        {
+            path: "/dasboardAdmin",
+            name: 'DashboardLayoutAdmin',
+            component: importComponent('BarsAdmin'),
             children: [
                 {
-                    path: "/",
-                    name: "Root",
-                    component: importComponent("Dashboard"),
+                    path: '/Amenu',
+                    name: 'Menu',
+                    meta: { title: 'Menu' },
+                    component: importComponent('Admin/Menu'),
                 },
                 {
-                    path: "/gd",
-                    name: "Guided",
-                    component: importComponent("TodoList/List"),
+                    path: '/Aprofil',
+                    name: 'Profil',
+                    meta: { title: 'Profil' },
+                    component: importComponent('Admin/Profil'),
+                },
+                {
+                    path: '/Areservation',
+                    name: 'Reservation',
+                    meta: { title: 'Reservation' },
+                    component: importComponent('Admin/Reservation'),
                 },
             ],
         },
+
+        {
+            path: "/dashboardCustomer",
+            name: 'DashboardLayoutCustomer',
+            component: importComponent('BarsCustomer'),
+            children: [
+                {
+                    path: '/Cmenu',
+                    name: 'Menu',
+                    meta: { title: 'Menu' },
+                    component: importComponent('Customer/Menu'),
+                },
+                {
+                    path: '/Cprofil',
+                    name: 'Profil',
+                    meta: { title: 'Profil' },
+                    component: importComponent('Customer/Profil'),
+                },
+                {
+                    path: '/Creservation',
+                    name: 'Reservation',
+                    meta: { title: 'Reservation' },
+                    component: importComponent('Customer/Reservation'),
+                },
+            ],
+        },
+
+        {
+            path: '/login',
+            name: 'Login',
+            meta: { title: 'Login'},
+            component: importComponent('Login'),
+        },
+
+        {
+            path: '/register',
+            name: 'Register',
+            meta: { title: 'Register'},
+            component: importComponent('Register'),
+        },
+
+        {
+            path: '*',
+            redirect:'/'
+        },
     ],
+});
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
 });
 
 export default router;
